@@ -9,14 +9,14 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - name: Checkout source code
-        uses: actions/checkout@v6
+        uses: actions/checkout@v1
 
       - name: Generate deployment package
         run: |
           zip -r Eshop.zip . -x '*.git*'
 
       - name: Install .NET Core SDK
-        uses: actions/setup-dotnet@v6
+        uses: actions/setup-dotnet@v1
         with:
           dotnet-version: '6.0.x'
 
@@ -30,7 +30,7 @@ jobs:
           pip3 install awsebcli --upgrade --user
           
       - name: Deploy to EB
-        uses: einaregilsson/beanstalk-deploy@v21
+        uses: einaregilsson/beanstalk-deploy@v1
         with:
           aws_access_key: ${{ secrets.AWS_ACCESS_KEY_ID }}
           aws_secret_key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
