@@ -29,6 +29,10 @@ jobs:
           sudo apt-get install python3-pip -y
           pip3 install awsebcli --upgrade --user
           
+      - name: Create runtime config file
+        run: |
+         echo '{"runtimeOptions":{"framework":{"name":"Microsoft.NETCore.App","version":"3.1.0"}}}' > Eshop.runtimeconfig.json
+
       - name: Deploy to EB
         uses: einaregilsson/beanstalk-deploy@v1
         with:
