@@ -9,16 +9,16 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - name: Checkout source code
-        uses: actions/checkout@v2
+        uses: actions/checkout@v6
 
       - name: Generate deployment package
         run: |
           zip -r Eshop.zip . -x '*.git*'
 
       - name: Install .NET Core SDK
-        uses: actions/setup-dotnet@v1
+        uses: actions/setup-dotnet@v6
         with:
-          dotnet-version: '5.0.x'
+          dotnet-version: '6.0.x'
 
       - name: Check .NET Core version
         run: dotnet --version
@@ -36,7 +36,7 @@ jobs:
           aws_secret_key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
           application_name: Eshop
           environment_name: Eshop-env
-          version_label: 21
+          version_label: 6.0
           use_existing_version_if_available: true
           region: us-east-1
           deployment_package: Eshop.zip
