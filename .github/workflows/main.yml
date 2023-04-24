@@ -1,0 +1,42 @@
+name: Deploy master
+on:
+  push:
+    branches:
+      - master
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout source code
+        uses: actions/checkout@v2
+
+      - name: Generate deployment package
+        run: |
+          zip -r Eshop.zip . -x '*.git*'
+
+      - name: Install .NET Core SDK
+        uses: actions/setup-dotnet@v1
+        with:
+          dotnet-version: '5.0.x'
+
+      - name: Check .NET Core version
+        run: dotnet --version
+
+      - name: Install Amazon EB CLI
+        run: |
+          sudo apt-get update
+          sudo apt-get install python3-pip -y
+          pip3 install awsebcli --upgrade --user
+          
+      - name: Deploy to EB
+        uses: einaregilsson/beanstalk-deploy@v21
+        with:
+          aws_access_key: ${{ secrets.AWS_ACCESS_KEY_ID }}
+          aws_secret_key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
+          application_name: Eshop
+          environment_name: Eshop-env
+          version_label: 21
+          use_existing_version_if_available: true
+          region: us-east-1
+          deployment_package: Eshop.zip
