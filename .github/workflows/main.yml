@@ -14,4 +14,4 @@ jobs:
         dotnet-version: 6.0.x
     - name: Run ls command
       run: |
-        dir
+        cd D:\a\backended\backended\DotNET_Projects
